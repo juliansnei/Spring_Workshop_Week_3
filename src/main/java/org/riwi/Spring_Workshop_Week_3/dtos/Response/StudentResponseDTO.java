@@ -5,4 +5,5 @@ import jakarta.persistence.Column;
 public class StudentResponseDTO {
     private String name;
     private String cc;
+    private String email;
 }
