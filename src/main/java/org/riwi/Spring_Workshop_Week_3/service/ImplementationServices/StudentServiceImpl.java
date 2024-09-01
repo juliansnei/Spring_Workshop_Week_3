@@ -1,11 +1,18 @@
 package org.riwi.Spring_Workshop_Week_3.service.ImplementationServices;
 
 import org.riwi.Spring_Workshop_Week_3.dtos.Response.StudentResponseDTO;
+import org.riwi.Spring_Workshop_Week_3.repository.Interfaces.StudentRepository;
 import org.riwi.Spring_Workshop_Week_3.service.InterfacesPerEntity.InterfaceStudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StudentServiceImpl implements InterfaceStudentService {
+
+    @Autowired
+    StudentRepository studentRepository;
     @Override
     public StudentResponseDTO update(Long aLong, StudentResponseDTO studentResponseDTO) {
         return null;
@@ -17,7 +24,10 @@ public class StudentServiceImpl implements InterfaceStudentService {
     }
 
     @Override
-    public StudentResponseDTO readById(Long aLong) {
+    public StudentResponseDTO readById(Long id) {
+
+
+
         return null;
     }
 
