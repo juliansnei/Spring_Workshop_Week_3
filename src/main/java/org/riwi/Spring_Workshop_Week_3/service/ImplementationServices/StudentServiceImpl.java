@@ -14,7 +14,7 @@ public class StudentServiceImpl implements InterfaceStudentService {
     @Autowired
     StudentRepository studentRepository;
     @Override
-    public StudentResponseDTO update(Long aLong, StudentResponseDTO studentResponseDTO) {
+    public StudentResponseDTO update(Long id, StudentResponseDTO studentResponseDTO) {
         return null;
     }
 
