@@ -7,7 +7,7 @@ import java.util.List;
 
 public class StudentServiceImpl implements InterfaceStudentService {
     @Override
-    public StudentResponseDTO update(Long aLong, StudentResponseDTO studentResponseDTO) {
+    public StudentResponseDTO update(Long id, StudentResponseDTO studentResponseDTO) {
         return null;
     }
 
