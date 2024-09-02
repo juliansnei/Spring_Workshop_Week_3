@@ -37,8 +37,9 @@ public class StudentServiceImpl implements InterfaceStudentService {
         return studentResponseDTO;
     }
 
+
     @Override
-    public StudentResponseDTO save(StudentResponseDTO studentResponseDTO) {
+    public StudentEntity save(StudentResponseDTO entity) {
         return null;
     }
 }
