@@ -65,4 +65,19 @@ public class CourseServiceImpl implements InterfaceCourseService {
                 .collect(Collectors.toList());
         return new PageImpl<>(courseResponseDTOList, pageable, coursePage.getTotalElements());
     }
+
+    @Override
+    public List<CourseResponseDTO> readAll() {
+        return List.of();
+    }
+
+    @Override
+    public CourseResponseDTO readById(Long aLong) {
+        return null;
+    }
+
+    @Override
+    public CourseEntity save(CourseResponseDTO Entity) {
+        return null;
+    }
 }
