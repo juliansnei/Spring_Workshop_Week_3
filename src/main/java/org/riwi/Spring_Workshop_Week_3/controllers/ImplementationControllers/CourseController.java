@@ -19,7 +19,7 @@ public class CourseController {
         Page<CourseResponseDTO> coursePage = courseService.getCoursesPaginated(page, size);
         return new ResponseEntity<>(coursePage, HttpStatus.OK);
     }
-    @GetMapping("/search")
+    @GetMapping("/api/v1/class")
     public ResponseEntity<Page<CourseResponseDTO>> searchCourses(
             @RequestParam("keyword") String keyword,
             @RequestParam(value = "page", defaultValue = "0") int page,
