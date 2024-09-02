@@ -1,4 +1,7 @@
 package org.riwi.Spring_Workshop_Week_3.controllers.GenericMethods;
 
-public interface ReadByIDControllerMethod {
+import org.springframework.http.ResponseEntity;
+
+public interface ReadByIDControllerMethod<Entity,ID> {
+    public ResponseEntity<Entity> readById(ID id);
 }
