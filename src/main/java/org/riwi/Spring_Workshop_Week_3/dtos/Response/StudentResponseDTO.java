@@ -1,10 +1,23 @@
 package org.riwi.Spring_Workshop_Week_3.dtos.Response;
 
 
+import org.riwi.Spring_Workshop_Week_3.entities.CourseEntity;
+
+import java.util.List;
+
 public class StudentResponseDTO {
     private String name;
     private String cc;
     private String email;
+    private List<CourseEntity> courseEntityList;
+
+    public List<CourseEntity> getCourseEntityList() {
+        return courseEntityList;
+    }
+
+    public void setCourseEntityList(List<CourseEntity> courseEntityList) {
+        this.courseEntityList = courseEntityList;
+    }
 
     public StudentResponseDTO() {
     }

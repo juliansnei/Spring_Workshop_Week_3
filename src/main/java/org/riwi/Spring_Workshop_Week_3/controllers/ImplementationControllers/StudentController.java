@@ -6,7 +6,6 @@ import org.riwi.Spring_Workshop_Week_3.entities.StudentEntity;
 import org.riwi.Spring_Workshop_Week_3.service.InterfacesPerEntity.InterfaceStudentService;
 import org.riwi.Spring_Workshop_Week_3.service.Mappers.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,16 +42,13 @@ public class StudentController implements InterfaceContStudent {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description) {
         try {
-            Page<StudentEntity> page2 = studentService.findPaginated(page,size);
-            List<StudentEntity> listStudents = page2.getContent();
-            List<StudentEntity> listActiveStudents  = studentService.TolistActiveStudents(listStudents);
-            List<StudentEntity> listStudentsWithParams  =  studentService.checkRequestParams(listActiveStudents, name, description);
-            List<StudentResponseDTO> listStudentsResponseDTO = new ArrayList<StudentResponseDTO>();
-            listStudentsResponseDTO = listStudentsWithParams
+            List<StudentEntity> listStudents = studentService.findPaginated(page,size,name,description);
+            System.out.println(listStudents);
+            return listStudents
                     .stream()
                     .map(studentMapper::toStudentResponseDTO)
                     .collect(Collectors.toList());
-            return  listStudentsResponseDTO;
+
         } catch (Exception e){
             e.printStackTrace();
             throw e;

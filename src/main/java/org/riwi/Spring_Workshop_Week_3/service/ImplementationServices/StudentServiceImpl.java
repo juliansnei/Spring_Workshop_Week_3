@@ -4,11 +4,10 @@ import org.riwi.Spring_Workshop_Week_3.dtos.Response.StudentResponseDTO;
 import org.riwi.Spring_Workshop_Week_3.entities.StudentEntity;
 import org.riwi.Spring_Workshop_Week_3.repository.Interfaces.StudentRepository;
 import org.riwi.Spring_Workshop_Week_3.service.InterfacesPerEntity.InterfaceStudentService;
-import org.riwi.Spring_Workshop_Week_3.service.Mappers.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +25,14 @@ public class StudentServiceImpl implements InterfaceStudentService {
     }
 
     @Override
-    public Page<StudentEntity> findPaginated(int pageNo, int pageSize) {
+    public List<StudentEntity> findPaginated(int pageNo, int pageSize, String name, String description) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        return studentRepository.findAll(pageable);
+        List<StudentEntity> listAllStudents = studentRepository.findAll();
+        List<StudentEntity> listActiveStudents  = TolistActiveStudents(listAllStudents);
+        List<StudentEntity> listStudentsWithParams  = checkRequestParams(listActiveStudents, name, description);
+        //return studentRepository.findAll(pageable);
+        System.out.println(listStudentsWithParams);
+        return toPageAList(listStudentsWithParams, pageable);
     }
 
     @Override
@@ -96,4 +100,16 @@ public class StudentServiceImpl implements InterfaceStudentService {
             return  listActiveStudents;
         }
     }
+
+    @Override
+    public List<StudentEntity> toPageAList(List<StudentEntity> list, Pageable pageable) {
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+        int startIndex = pageNumber * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, list.size());
+        System.out.println(list.subList(startIndex, endIndex));
+        return list.subList(startIndex, endIndex);
+    }
+
+
 }

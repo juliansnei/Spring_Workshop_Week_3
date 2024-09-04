@@ -12,6 +12,7 @@ public class StudentMapper {
         student.setCc(studentEntity.getCc());
         student.setName(studentEntity.getName());
         student.setEmail(studentEntity.getEmail());
+        student.setCourseEntityList(studentEntity.getCourseEntityList());
         return student;
     }
 }
