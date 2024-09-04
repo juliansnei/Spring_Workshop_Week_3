@@ -7,7 +7,6 @@ import org.riwi.Spring_Workshop_Week_3.service.InterfacesPerEntity.InterfaceStud
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +29,6 @@ public class StudentServiceImpl implements InterfaceStudentService {
         List<StudentEntity> listAllStudents = studentRepository.findAll();
         List<StudentEntity> listActiveStudents  = TolistActiveStudents(listAllStudents);
         List<StudentEntity> listStudentsWithParams  = checkRequestParams(listActiveStudents, name, description);
-        //return studentRepository.findAll(pageable);
         System.out.println(listStudentsWithParams);
         return toPageAList(listStudentsWithParams, pageable);
     }
@@ -110,6 +108,4 @@ public class StudentServiceImpl implements InterfaceStudentService {
         System.out.println(list.subList(startIndex, endIndex));
         return list.subList(startIndex, endIndex);
     }
-
-
 }
