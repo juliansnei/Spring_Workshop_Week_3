@@ -19,6 +19,10 @@ public class CourseEntity {
     private Long id;
     @Column(name = "name",nullable = false)
     private String name;
+    @Column(name = "description",nullable = false)
+    private String description;
+    @Column(name = "active" , nullable = false)
+    private boolean active;
     @ManyToMany(mappedBy = "courseEntityList")
     private List<StudentEntity> studentEntityList;
     @OneToMany(mappedBy = "courseEntity")
