@@ -1,24 +1,28 @@
 package org.riwi.Spring_Workshop_Week_3.controllers.ImplementationControllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.riwi.Spring_Workshop_Week_3.controllers.InterfacesControllersPerEntity.InterfaceContStudent;
 import org.riwi.Spring_Workshop_Week_3.dtos.Response.StudentResponseDTO;
+import org.riwi.Spring_Workshop_Week_3.dtos.exception.ErrorsListsResponse;
 import org.riwi.Spring_Workshop_Week_3.entities.StudentEntity;
 import org.riwi.Spring_Workshop_Week_3.service.InterfacesPerEntity.InterfaceStudentService;
 import org.riwi.Spring_Workshop_Week_3.service.Mappers.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/v1/students")
+@Tag(name = "RiwiAcademy", description = "This is the Student Controller")
 public class StudentController implements InterfaceContStudent {
 
     @Autowired
@@ -37,23 +41,32 @@ public class StudentController implements InterfaceContStudent {
     }
 
     @Override
-    @GetMapping("/api/v1/students")
+    @GetMapping
+    @Tag(name = "Find All Atudents, filtering the active ones, by name and description")
+    @Operation(summary = "This endpoint is up to find students", description = "The endpoint gives you a pageable list of students filter by active state, name, and description")
+    @ApiResponse(
+            responseCode = "400",
+            description = "This error appears when the type attribute is incorrect or when there is no attribute",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorsListsResponse.class)
+                    )
+            }
+    )
     public List<StudentResponseDTO> findPaginated(
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description) {
+            @Valid @RequestParam(required = false, defaultValue = "0") int page,
+            @Valid @RequestParam(required = false, defaultValue = "10") int size,
+            @Valid @RequestParam(required = false) String name,
+            @Valid @RequestParam(required = false) String description) {
         try {
-            Page<StudentEntity> page2 = studentService.findPaginated(page,size);
-            List<StudentEntity> listStudents = page2.getContent();
-            List<StudentEntity> listActiveStudents  = studentService.TolistActiveStudents(listStudents);
-            List<StudentEntity> listStudentsWithParams  =  studentService.checkRequestParams(listActiveStudents, name, description);
-            List<StudentResponseDTO> listStudentsResponseDTO = new ArrayList<StudentResponseDTO>();
-            listStudentsResponseDTO = listStudentsWithParams
+            List<StudentEntity> listStudents = studentService.findPaginated(page,size,name,description);
+            System.out.println(listStudents);
+            return listStudents
                     .stream()
                     .map(studentMapper::toStudentResponseDTO)
                     .collect(Collectors.toList());
-            return  listStudentsResponseDTO;
+
         } catch (Exception e){
             e.printStackTrace();
             throw e;

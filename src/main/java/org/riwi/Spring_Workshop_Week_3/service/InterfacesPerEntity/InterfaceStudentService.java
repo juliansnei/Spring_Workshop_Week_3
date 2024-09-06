@@ -6,7 +6,7 @@ import org.riwi.Spring_Workshop_Week_3.service.CRUD.Disable;
 import org.riwi.Spring_Workshop_Week_3.service.CRUD.ReadAll;
 import org.riwi.Spring_Workshop_Week_3.service.CRUD.ReadByID;
 import org.riwi.Spring_Workshop_Week_3.service.CRUD.Save;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,9 +16,11 @@ public interface InterfaceStudentService extends
                 Save<StudentEntity,StudentResponseDTO>,
                 Disable<StudentResponseDTO, Long>
     {
-        Page<StudentEntity> findPaginated(int pageNo, int pageSize);
+        List<StudentEntity> findPaginated(int pageNo, int pageSize, String name, String description);
         List<StudentEntity> TolistActiveStudents(List<StudentEntity> listStudents);
         List<StudentEntity>  TolistStudentsByName(String name, List<StudentEntity> listOfStudents);
         List<StudentEntity>  TolistStudentsByDescription(String description, List<StudentEntity> listOfStudents);
         List<StudentEntity> checkRequestParams(List<StudentEntity> listActiveStudents, String name, String description);
-}
+        List<StudentEntity> toPageAList(List<StudentEntity> list, Pageable pageable);
+
+    }
